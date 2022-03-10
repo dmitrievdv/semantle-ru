@@ -12,7 +12,7 @@ import tqdm
 from more_itertools import chunked
 
 model = word2vec.KeyedVectors.load_word2vec_format(
-    "../GoogleNews-vectors-negative300.bin", binary=True
+    "russian-w2v.bin", binary=True
 )
 
 con = sqlite3.connect("word2vec.db")

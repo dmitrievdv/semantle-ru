@@ -28,17 +28,17 @@ ALL_WORDS = False
 
 
 model = word2vec.KeyedVectors.load_word2vec_format(
-    "../GoogleNews-vectors-negative300.bin", binary=True
+    "russian-w2v.bin", binary=True
 )
 
 
 def make_words():
-    allowable_words = set()
-    with open("words_alpha.txt") as walpha:
-        for line in walpha.readlines():
-            allowable_words.add(line.strip())
+    # allowable_words = set()
+    # with open("words_alpha.txt") as walpha:
+    #     for line in walpha.readlines():
+    #         allowable_words.add(line.strip())
 
-    print("loaded alpha...")
+    # print("loaded alpha...")
 
     # The banned words are stored obfuscated because I do not want a giant
     # list of banned words to show up in my repository.
@@ -47,12 +47,12 @@ def make_words():
         for line in f:
             banned_hashes.add(line.strip())
 
-    simple_word = re.compile("^[a-z]*$")
+    simple_word = re.compile("^[а-я]*$")
     words = []
     for word in model.key_to_index:
-        if ALL_WORDS or (simple_word.match(word) and word in allowable_words):
+        if ALL_WORDS or (simple_word.match(word)): # and word in allowable_words):
             h = sha1()
-            h.update(("banned" + word).encode("ascii"))
+            h.update(("banned" + word).encode("utf8"))
             hash = h.hexdigest()
             if not hash in banned_hashes:
                 words.append(word)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
                 continue
             secrets.append(line.strip('",'))
 
-    CONCURRENCY = True
+    CONCURRENCY = False
     if CONCURRENCY:
         # may need to limit concurrency for memory reasons
         # XXX bug: wraps all results into a list, e.g. won't write any until the very end
