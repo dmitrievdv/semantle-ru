@@ -18,7 +18,7 @@ let guessCount = 0;
 let model = null;
 const now = Date.now();
 const today = Math.floor(now / 86400000);
-const initialDay = 19061;
+const initialDay = 19060;
 const puzzleNumber = (today - initialDay) % secretWords.length;
 const handleStats = puzzleNumber >= 24;
 const yesterdayPuzzleNumber = (today - initialDay + secretWords.length - 1) % secretWords.length;
